@@ -53,7 +53,7 @@ class Home extends Component{
     }
 
     fetchAndAddDefaultCapital(capitalList){
-        const url = `http://ip-api.com/json/`;
+        const url = `https://ip-api.com/json/`;
         return fetch(url,{
             method: "GET"
         }).then(response => response.json())
