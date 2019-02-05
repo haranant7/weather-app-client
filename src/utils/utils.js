@@ -4,3 +4,4 @@ export function validateEmail(email) {
 }
 
 export const serverDomain = "https://mighty-anchorage-55505.herokuapp.com";
+export const ipAPI_key = "00db14fe8b0684f8b7d7873acb9aa614ffad9fbec4a8644e13184c80";

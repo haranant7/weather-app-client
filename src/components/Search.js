@@ -6,6 +6,7 @@ import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import { FormLabel } from 'react-bootstrap';
 import { getFavourites, getCapitals, addFavouriteCity, addFavourite, GENERIC_ERROR } from '../actions';
+import { ipAPI_key } from "../utils/utils";
 
 class Search extends Component {
     constructor(props) {
@@ -62,14 +63,15 @@ class Search extends Component {
     }
 
     fetchAndAddDefaultCapital(capitalList){
-        const url = `${window.location.protocol}//ip-api.com/json/`;
+        const url = `https://api.ipdata.co?api-key=${ ipAPI_key }`;
+
         return fetch(url,{
             method: "GET"
         }).then(response => response.json())
             .then(json => {
                 if(json){
-                    this.setState({loading: false,defaultCapital:capitalList[json.countryCode]});
-                    this.props.addFavourite(capitalList[json.countryCode]);
+                    this.setState({loading: false,defaultCapital:capitalList[json.country_code]});
+                    this.props.addFavourite(capitalList[json.country_code]);
                 }
                 else{
                     this.setState({showError: true,
