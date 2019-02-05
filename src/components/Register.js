@@ -62,6 +62,12 @@ class Register extends Component{
                             placeholder="jobs@benestudio.co"
                             onChange={e => this.setState({'userId':e.target.value})}
                             className="input-username"
+                            onKeyUp={(e) => {
+                                if (e.keyCode === 13) {
+                                    e.preventDefault();
+                                    this.signUp();
+                                }
+                             }}
                         />
                     </FormGroup>
                     {' '}
@@ -73,6 +79,12 @@ class Register extends Component{
                             placeholder="********"
                             onChange={e => this.setState({'pwd':e.target.value})}
                             className="input-password"
+                            onKeyUp={(e) => {
+                                if (e.keyCode === 13) {
+                                    e.preventDefault();
+                                    this.signUp();
+                                }
+                             }}
                         />
                     </FormGroup>
                     <FormGroup className="login-button-group">

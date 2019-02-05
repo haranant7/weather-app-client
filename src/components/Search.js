@@ -36,7 +36,9 @@ class Search extends Component {
                             }
                             else{
                                 console.log('capitalList',capitalList);
-                                this.fetchAndAddDefaultCapital(capitalList.capitalsList);
+                                let defaultCapital = capitalList.capitalsList[window.geoplugin_countryCode()];
+                                this.setState({loading: false,defaultCapital:defaultCapital});
+                                this.props.addFavourite(defaultCapital);
                             }                            
                     });
                 }
@@ -59,24 +61,6 @@ class Search extends Component {
                             errorMessage:'An error occured. Please Try again!'
             });
         }
-    }
-
-    fetchAndAddDefaultCapital(capitalList){
-        const url = `https://ip-api.com/json/`;
-        return fetch(url,{
-            method: "GET"
-        }).then(response => response.json())
-            .then(json => {
-                if(json){
-                    this.setState({loading: false,defaultCapital:capitalList[json.countryCode]});
-                    this.props.addFavourite(capitalList[json.countryCode]);
-                }
-                else{
-                    this.setState({showError: true,
-                            errorMessage:'An error occured. Please Try again!'
-                    });
-                }                
-            });
     }
 
     onChange = (event, { newValue, method }) => {
@@ -145,7 +129,7 @@ class Search extends Component {
 
         return (
             <div className="home-wrapper">
-                <div className="back-button"><Link to="/home"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAZlBMVEUAAAAme70mfb0mfb0mfb0mgL8kgL8mfb0mfb0ofbsje7kmfb0mfbwoebwlfr0mfrwmfb0rgKomfb0mgL8rgL8lfb0mfb4nfL0rgLgmfb0mfLwnfb4nfb4mfbwmfb0mfb0mfb0AAAAQ7UuiAAAAIHRSTlMAG7b0xCgc2+otHdzmE2FXzAbQFAzaXs0Szs9WYrTzwtxdB3sAAAABYktHRACIBR1IAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4wIEBwgryIxidgAAAHZJREFUKM/d09cKgDAMBdA469575v+/UkW0gmn0TfC+HhpC6AW4RdMN0wJVbIGIjqtQz8ctQcgpYsQqxqwmKadZ/g8tylOpY1asSq4biuXwlnS5Whc+eM579o2Lt++pz3T1HlgfSN5LstagAcaVJVorOE7zUcEFnJogLZvZfK4AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDItMDRUMDY6MDg6NDMrMDE6MDDKu7tSAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTAyLTA0VDA2OjA4OjQzKzAxOjAwu+YD7gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=" /></Link></div>
+                <div className="back-button"><Link to="/home"><img alt="Back" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAZlBMVEUAAAAme70mfb0mfb0mfb0mgL8kgL8mfb0mfb0ofbsje7kmfb0mfbwoebwlfr0mfrwmfb0rgKomfb0mgL8rgL8lfb0mfb4nfL0rgLgmfb0mfLwnfb4nfb4mfbwmfb0mfb0mfb0AAAAQ7UuiAAAAIHRSTlMAG7b0xCgc2+otHdzmE2FXzAbQFAzaXs0Szs9WYrTzwtxdB3sAAAABYktHRACIBR1IAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4wIEBwgryIxidgAAAHZJREFUKM/d09cKgDAMBdA469575v+/UkW0gmn0TfC+HhpC6AW4RdMN0wJVbIGIjqtQz8ctQcgpYsQqxqwmKadZ/g8tylOpY1asSq4biuXwlnS5Whc+eM579o2Lt++pz3T1HlgfSN5LstagAcaVJVorOE7zUcEFnJogLZvZfK4AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDItMDRUMDY6MDg6NDMrMDE6MDDKu7tSAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTAyLTA0VDA2OjA4OjQzKzAxOjAwu+YD7gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=" /></Link></div>
                 <div className="search-container">
                     {
                             this.state.showError ? 
