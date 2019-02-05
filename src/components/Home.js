@@ -29,9 +29,7 @@ class Home extends Component{
                             }
                             else{
                                 console.log('capitalList',capitalList);
-                                let defaultCapital = capitalList.capitalsList[window.geoplugin_countryCode()];
-                                this.setState({loading: false,defaultCapital:defaultCapital});
-                                this.props.addFavourite(defaultCapital);
+                                this.fetchAndAddDefaultCapital(capitalList.capitalsList);
                             }                            
                     });
                 }
@@ -52,6 +50,24 @@ class Home extends Component{
                             errorMessage:'An error occured. Please Try again!'
             });
         }
+    }
+
+    fetchAndAddDefaultCapital(capitalList){
+        const url = `${window.location.protocol}//ip-api.com/json/`;
+        return fetch(url,{
+            method: "GET"
+        }).then(response => response.json())
+            .then(json => {
+                if(json){
+                    this.setState({loading: false,defaultCapital:capitalList[json.countryCode]});
+                    this.props.addFavourite(capitalList[json.countryCode]);
+                }
+                else{
+                    this.setState({showError: true,
+                            errorMessage:'An error occured. Please Try again!'
+                    });
+                }                
+            });
     }
 
     render(){
