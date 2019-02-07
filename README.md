@@ -40,7 +40,7 @@ weather-app-client<br>
     |<br>
     |---- actions - contains action creators<br>
     |---- assets  - Image files<br>
-    |---- components  - contains App<br> React Components
+    |---- components  - contains App React Components<br>
     |---- font   - font files <br>
     |---- reducers  - contains reducers<br>
     |---- styles    - CSS files<br>
