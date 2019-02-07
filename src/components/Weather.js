@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {  } from '../actions';
 import { Link } from 'react-router-dom';
 import { FormLabel } from 'react-bootstrap';
-import { serverDomain } from "../utils/utils";
+import { serverDomain, strings } from "../utils/utils";
 
 class Weather extends Component{
     constructor(props){
@@ -22,7 +22,7 @@ class Weather extends Component{
             loading:true,
             showError: false,
             intervalId:null,
-            errorMsg:'An error occured. Please Try again!'
+            errorMsg: strings.genericError
         }
         props.location.capital = props.location.capital || localStorage.getItem('currentCapital')
         this.getWeather(props.location.capital);
@@ -78,7 +78,7 @@ class Weather extends Component{
                         this.setState({ 
                             showError: true,
                             loading: false,
-                            errorMsg:'Session Expired ! You will be redirected to Login page'
+                            errorMsg: strings.sessionExpiry
                         });
                         window.setTimeout(()=>{
                             this.props.history.push(`/`);
@@ -88,7 +88,7 @@ class Weather extends Component{
                         this.setState({ 
                             showError: true,
                             loading: false,
-                            errorMsg:'An error occured. Please Try again!'
+                            errorMsg: strings.genericError
                         });
                     }
                 }                
@@ -110,7 +110,6 @@ class Weather extends Component{
 
     componentWillUnmount(){
         window.clearInterval(this.state.intervalId);
-        console.log('cleared',this.state.intervalId);
     }
 
     render(){
@@ -151,16 +150,16 @@ class Weather extends Component{
                                 </div>
                                 <div className="weather-column weather-details">
                                     <div className="cell-temp">
-                                        <i className="wi wi-thermometer"/>
-                                        <span className="sub-cell">{this.state.temp} &#176;C</span>
+                                        <div className="sub-cell-img"><i className="wi wi-thermometer"/></div>
+                                        <div className="sub-cell">{this.state.temp} &#176;C</div>
                                     </div>
                                     <div className="cell-sunrise">
-                                        <i className="wi wi-sunrise" />
-                                        <span className="sub-cell">{this.state.sunrise}</span>
+                                        <div className="sub-cell-img"><i className="wi wi-sunrise" /></div>
+                                        <div className="sub-cell">{this.state.sunrise}</div>
                                     </div>
                                     <div className="cell-sunset">
-                                        <i className="wi wi-sunset" />
-                                        <span className="sub-cell">{this.state.sunset}</span>
+                                        <div className="sub-cell-img"><i className="wi wi-sunset" /></div>
+                                        <div className="sub-cell">{this.state.sunset}</div>
                                     </div>
                                 </div> 
                             </div>

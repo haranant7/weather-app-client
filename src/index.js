@@ -1,3 +1,9 @@
+/*
+
+App client to render files
+
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Login from './components/Login';
@@ -27,4 +33,5 @@ ReactDOM.render(
                 </Switch>
         </BrowserRouter>
     </Provider>
-    ,document.getElementById('root'));
+    ,document.getElementById('root')
+);

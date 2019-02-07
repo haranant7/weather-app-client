@@ -1,3 +1,9 @@
+/*
+
+Component for Private routes accessible only when logged in
+
+*/
+
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
@@ -5,6 +11,6 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         localStorage.getItem('token')
             ? <Component {...props} />
-            : <Redirect to={{ pathname: '/Home', state: { from: props.location } }} />
+            : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
     )} />
 )

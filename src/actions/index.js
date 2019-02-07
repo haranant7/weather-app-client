@@ -1,3 +1,9 @@
+/*
+
+Set of action creators
+
+*/
+
 import { serverDomain } from "../utils/utils";
 
 export const ADD_FAVOURITE = 'ADD_FAVOURITE';

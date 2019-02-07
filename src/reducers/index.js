@@ -1,3 +1,9 @@
+/*
+
+Set of Reducers
+
+*/
+
 import { combineReducers } from 'redux';
 import { GET_FAVOURITES, GET_CAPITALS, ADD_FAVOURITE,GENERIC_ERROR } from '../actions';
 

@@ -4,7 +4,9 @@ $tertiary-color1: #267DBD;
 $tertiary-color2: #93B7CC;
 $tertiary-color3: #3893B1;
 $error-color: #A53C3C;
+$success-color: #3C763D;
 $mobile-width: 600px;
+$mobile-height: 500px;
 $desktop-width: 1024px;
 
 
@@ -13,6 +15,19 @@ $desktop-width: 1024px;
 
 @mixin mobile {
   @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+
+@mixin mobile_landscape {
+  @media (max-height: #{$mobile-height}) and (orientation:landscape) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$mobile-width + 1px}) and (max-width: #{$desktop-width - 1px}) {
     @content;
   }
 }
@@ -36,6 +51,12 @@ body{
         top: 30%;
         left: 5%;
         width: 90%;
+    }
+
+    @include tablet {
+        top: 30%;
+        left: 25%;
+        width: 50%;
     }
 
     @include desktop {
@@ -62,6 +83,10 @@ body{
     color: $error-color;
 }
 
+.signUpSuccess{
+    color: $success-color !important;
+}
+
 // General Rules -  End
 
 // Login page/ Register page specific rules - Start
@@ -70,8 +95,16 @@ body{
     color: $secondary-color;
     float: left;
     margin-bottom: 0px;
-    font-size: 10px;
     font-weight: 800;
+    @include mobile {
+        font-size: 12px;
+    }
+    @include tablet {
+        font-size: 12px;
+    }
+    @include desktop {
+        font-size: 10px;
+    }
 }
 
 .btn-signup, .btn-login, .btn-signup a, .btn-register-signup{
@@ -81,6 +114,9 @@ body{
     color: $tertiary-color3;
     cursor: pointer;
     @include mobile {
+        font-size: 15px;
+    }
+    @include tablet {
         font-size: 15px;
     }
     @include desktop {
@@ -107,6 +143,12 @@ body{
         width: 90%;
     }
 
+    @include tablet {
+        top: 30%;
+        left: 5%;
+        width: 90%;
+    }
+
     @include desktop {
         top: 40%;
         left: 35%;
@@ -127,6 +169,9 @@ body{
     color: $tertiary-color2;
     font-weight: 700;
     @include mobile {
+        font-size: 30px;
+    }
+    @include tablet {
         font-size: 30px;
     }
     @include desktop {
@@ -158,6 +203,10 @@ body{
         height: 30px;
         font-size: 30px;
     }
+    @include tablet {
+        height: 30px;
+        font-size: 30px;
+    }
     @include desktop {
         height: 25px;
         font-size: 20px;
@@ -178,6 +227,9 @@ body{
     @include mobile {
         font-size: 25px;
     }
+    @include tablet {
+        font-size: 25px;
+    }
     @include desktop {
         font-size: 15px;
     } 
@@ -196,6 +248,11 @@ body{
         bottom: 5%;
         left: 80%;
         font-size: 20px;
+    }
+    @include tablet {
+        bottom: 20%;
+        left: 60%;
+        font-size: 25px;
     }
     @include desktop {
         top: 80%;
@@ -219,8 +276,20 @@ body{
         height: 100%;
     }
 
+    @include tablet {
+        top: 10%;
+        left: 5%;
+        width: 90%;
+        height: 100%;
+    }
+
     @include desktop {
         top: 40%;
+        left: 15%;
+        width: 70%;
+    }  
+    @include mobile_landscape {
+        top: 25%;
         left: 15%;
         width: 70%;
     }    
@@ -231,7 +300,13 @@ body{
     @include mobile {
         zoom: 6;
     }
+    @include tablet {
+        zoom: 8;
+    }
     @include desktop {
+        zoom: 3;
+    }
+    @include mobile_landscape {
         zoom: 3;
     }
 }
@@ -242,7 +317,15 @@ body{
         zoom: 2;
         width: 25px;
     }
+    @include tablet {
+        zoom: 2;
+        width: 25px;
+    }
     @include desktop {
+        zoom: 1;
+        width: 8%;
+    }
+    @include mobile_landscape {
         zoom: 1;
         width: 8%;
     }
@@ -250,10 +333,16 @@ body{
 
 .wi-thermometer{
     @include mobile {
-        padding-left: 14%;
+        padding-left: 7%;
+    }
+    @include tablet {
+        padding-left: 7%;
     }
     @include desktop {
-        padding-left: 7%;
+        padding-left: 10px;
+    }
+    @include mobile_landscape {
+        padding-left: 60%;
     }
 }
 
@@ -267,16 +356,32 @@ body{
         position: absolute;
         left: 10%;
     }
+    @include tablet {
+        width: 80%;
+        padding-left: 5%;
+        padding-bottom: 50px;
+        position: absolute;
+        left: 10%;
+    }
     @include desktop {
+        width: 30%;
+        padding-left: 5%;
+    }
+    @include mobile_landscape {
         width: 30%;
         padding-left: 5%;
     }
 }
 
-.sub-cell{
+.sub-cell, .sub-cell-img{
     padding-left: 15px;
+    display: table-cell;
+    min-width: 20%;
     color: $tertiary-color3;
     @include mobile {
+        font-size: 20px;
+    }
+    @include tablet {
         font-size: 20px;
     }
 }
@@ -286,9 +391,9 @@ body{
 }
 
 .cell-weather-desc{
-    @include mobile {
-        float: left;
-        padding-left: 30%;
+    margin-top: 20px;
+    @include tablet{
+        font-size: 30px;
     }
 }
 
@@ -296,6 +401,9 @@ body{
     font-weight: bold;
     @include mobile {
         font-size: 35px;
+    }
+    @include tablet {
+        font-size: 40px;
     }
     @include desktop {
         font-size: 20px;
@@ -305,8 +413,11 @@ body{
 .cell-current-time-hour, .cell-current-time-min{
     color: $tertiary-color1;
     font-weight: normal;
-     @include mobile {
+    @include mobile {
         font-size: 45px;
+    }
+    @include tablet {
+        font-size: 50px;
     }
     @include desktop {
         font-size: 25px;
@@ -314,8 +425,11 @@ body{
 }
 
 .cell-current-time-hour{
-     @include mobile {
+    @include mobile {
         height: 40px;
+    }
+    @include tablet {
+        height: 45px;
     }
     @include desktop {
         height: 25px;
@@ -326,17 +440,34 @@ body{
     @include mobile {
         float: left;
     }
+    @include tablet {
+        float: left;
+    }
 }
 
 .time-info{
     @include mobile {
-        top: 5%;
+        top: 0%;
+    }
+    @include tablet {
+        top: 0%;
+    }
+    @include mobile_landscape {
+        top: 0%;
+        left: 30%;
     }
 }
 
 .weather-condition{
     @include mobile {
-        top:40%;
+        top:35%;
+    }
+    @include tablet {
+        top:30%;
+    }
+    @include mobile_landscape {
+        top: 5%;
+        left: 0%;
     }
 }
 
@@ -345,12 +476,32 @@ body{
         top: 60%;
         padding-left: 0px;
     }
+    @include tablet {
+        top: 60%;
+        padding-left: 0px;
+    }
+    @include mobile_landscape {
+        top: 5%;
+        left: 60%;
+        width: 40%;
+    }
 }
 
 .cell-temp, .cell-sunrise, .cell-sunset{
     @include mobile {
         width: 90%;
-        padding-bottom:5px;
+        padding-bottom:10px;
+        padding-left:20%;
+    }
+    @include tablet {
+        width: 90%;
+        padding-bottom:10px;
+        padding-left:36%;
+    }
+    @include mobile_landscape {
+        width: 100%;
+        padding-bottom:10px;
+        padding-left:30%;
     }
 }
 
@@ -358,8 +509,14 @@ body{
     @include mobile {
         margin-left: 7%;
     }
+    @include tablet {
+        margin-left: 7%;
+    }
     @include desktop {
         margin-left: 5%;
+    }
+    @include mobile_landscape {
+        margin-left: 30%;
     }
 }
 
@@ -369,7 +526,13 @@ body{
     @include mobile {
         left: 20%;
     }
+    @include tablet {
+        left: 20%;
+    }
     @include desktop {
+        left: 40%;
+    }
+    @include mobile_landscape {
         left: 40%;
     }
     

@@ -1,7 +1,13 @@
+/*
+
+Component for Registration Page
+
+*/
+
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import '../styles/index.css';
-import { validateEmail, serverDomain } from "../utils/utils";
+import { validateEmail, serverDomain, strings } from "../utils/utils";
 
 
 class Register extends Component{
@@ -11,9 +17,10 @@ class Register extends Component{
         this.state = {
             userId: '',
             pwd: '',
-            errorMessage: 'Please enter the Username and Password',
+            errorMessage: strings.loginFormValidation,
             isValid: true,
-            loading: false
+            loading: false,
+            signUpSuccess: false
         }
     }
     
@@ -32,12 +39,18 @@ class Register extends Component{
             }).then(response => response.json())
                 .then(json => {
                     if(json.errorCode === 0){
-                        this.setState({loading: false,isValid: true});
-                        this.props.history.push(`/`);
+                        this.setState({loading: false,
+                                        errorMessage: strings.signUpSuccess,
+                                        isValid: false,
+                                        signUpSuccess: true
+                                    });
+                        window.setTimeout(()=>{
+                            this.props.history.push(`/`);
+                        },3000);
                     }
                     else{
                         this.setState({
-                            errorMessage:'An Error Occured. please try again',
+                            errorMessage: strings.genericError,
                             isValid: false,
                             loading: false
                         })
@@ -99,7 +112,7 @@ class Register extends Component{
                     </FormGroup>
                     {
                         !this.state.isValid ? 
-                            <FormLabel className="label-error">{this.state.errorMessage}</FormLabel>
+                            <FormLabel className={this.state.signUpSuccess?'label-error signUpSuccess' :'label-error'}>{this.state.errorMessage}</FormLabel>
                         :
                         <div></div>
                     }

@@ -1,3 +1,9 @@
+/*
+
+Component for Search Page
+
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,7 +12,7 @@ import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import { FormLabel } from 'react-bootstrap';
 import { getFavourites, getCapitals, addFavouriteCity, addFavourite, GENERIC_ERROR } from '../actions';
-import { ipAPI_key } from "../utils/utils";
+import { ipAPI_key, strings } from "../utils/utils";
 
 class Search extends Component {
     constructor(props) {
@@ -17,9 +23,8 @@ class Search extends Component {
           value: '',
           suggestions: [],
           capitalsList:[],
-          showSave: false,
           showError: false,
-          errorMessage:'An error occured. Please Try again!'
+          errorMessage: strings.genericError
         };    
 
         if(props.capitalsList.length < 1){
@@ -49,7 +54,7 @@ class Search extends Component {
     handleError(res){
         if(res.err.errorCode === 99){
             this.setState({showError: true,
-                            errorMessage:'Session Expired ! You will be redirected to Login page'
+                            errorMessage: strings.sessionExpiry
             });
             window.setTimeout(()=>{
                 this.props.history.push(`/`);
@@ -57,12 +62,13 @@ class Search extends Component {
         }
         else{
             this.setState({showError: true,
-                            errorMessage:'An error occured. Please Try again!'
+                            errorMessage: strings.genericError
             });
         }
     }
 
     fetchAndAddDefaultCapital(capitalList){
+        // Get user's location from IP
         const url = `https://api.ipdata.co?api-key=${ ipAPI_key }`;
 
         return fetch(url,{
@@ -74,9 +80,7 @@ class Search extends Component {
                     this.props.addFavourite(capitalList[json.country_code]);
                 }
                 else{
-                    this.setState({showError: true,
-                            errorMessage:'An error occured. Please Try again!'
-                    });
+                    this.setState({loading: false});
                 }                
             });
     }
@@ -95,22 +99,25 @@ class Search extends Component {
 
     onSuggestionsClearRequested = () => {
         this.setState({
-          suggestions: [],
-          showSave: false
+          suggestions: []
         });
+        if(this.state.value == ''){
+            document.getElementsByClassName('btn-favourite-save')[0].classList.add('hidden-save');
+        }
     };
 
     submit(){
         var found = false;
         for(var key in this.props.capitalsList){
-            if(this.props.capitalsList[key]===this.state.value){
+            if(this.props.capitalsList[key]===this.state.value){ // Check if the entered value is valid
                 found = true;
             }
         }
         if(!found){
             this.setState({showError: true,
-                            errorMessage:'Please select a valid input'
+                            errorMessage: strings.searchValidation
                             });
+            document.getElementsByClassName('btn-favourite-save')[0].classList.add('hidden-save');
         }
         else{
             this.props.addFavouriteCity(this.state.value)
@@ -118,7 +125,7 @@ class Search extends Component {
                     if(res.type === GENERIC_ERROR){
                         if(res.err.errorCode === 99){
                             this.setState({showError: true,
-                                            errorMessage:'Session Expired ! You will be redirected to Login page'
+                                            errorMessage: strings.sessionExpiry
                             });
                             window.setTimeout(()=>{
                                 this.props.history.push(`/`);
@@ -126,7 +133,7 @@ class Search extends Component {
                         }
                         else{
                             this.setState({showError: true,
-                                            errorMessage:'An error occured. Please Try again!'
+                                            errorMessage: strings.genericError
                             });
                         }
                     }
@@ -161,13 +168,11 @@ class Search extends Component {
                         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                         getSuggestionValue={this.getSuggestionValue}
                         renderSuggestion={this.renderSuggestion}
+                        onSuggestionSelected={this.onSuggestionSelected}
                         inputProps={inputProps} />
                 </div>
                 {
-                    //this.state.showSave ? 
-                        <FormLabel className="btn-favourite-save" onClick={()=>this.submit()}>Save</FormLabel>
-                    //:
-                    //<div></div>
+                    <FormLabel className="btn-favourite-save hidden-save" onClick={()=>this.submit()}>Save</FormLabel>
                 }
                 
             </div>
@@ -234,8 +239,7 @@ class Search extends Component {
     }
 
     onSuggestionSelected(){
-        debugger;
-        this.setState({showSave: true});
+        document.getElementsByClassName('btn-favourite-save')[0].classList.remove('hidden-save');
     }
  
 }

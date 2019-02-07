@@ -1,9 +1,15 @@
+/*
+
+Component for Home Page
+
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFavourites, getCapitals, addFavourite, GENERIC_ERROR } from '../actions';
 import { Link } from 'react-router-dom';
 import { FormLabel } from 'react-bootstrap';
-import { ipAPI_key } from "../utils/utils";
+import { ipAPI_key, strings } from "../utils/utils";
 
 class Home extends Component{
     constructor(props){
@@ -40,7 +46,7 @@ class Home extends Component{
     handleError(res){
         if(res.err.errorCode === 99){
             this.setState({showError: true,
-                            errorMessage:'Session Expired ! You will be redirected to Login page'
+                            errorMessage:strings.sessionExpiry
             });
             window.setTimeout(()=>{
                 this.props.history.push(`/`);
@@ -48,7 +54,7 @@ class Home extends Component{
         }
         else{
             this.setState({showError: true,
-                            errorMessage:'An error occured. Please Try again!'
+                            errorMessage: strings.genericError
             });
         }
     }
@@ -64,9 +70,7 @@ class Home extends Component{
                     this.props.addFavourite(capitalList[json.country_code]);
                 }
                 else{
-                    this.setState({showError: true,
-                            errorMessage:'An error occured. Please Try again!'
-                    });
+                    this.setState({loading: false});
                 }                
             });
     }

@@ -1,10 +1,14 @@
+/*
+
+Component for Login Page
+
+*/
+
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { validateEmail, serverDomain } from "../utils/utils";
+import { validateEmail, serverDomain, strings } from "../utils/utils";
 import '../styles/index.css';
-
-
 
 class Login extends Component{
     constructor(props){
@@ -13,7 +17,7 @@ class Login extends Component{
         this.state = {
             userId: '',
             pwd: '',
-            errorMessage: 'Please enter the Username and Password',
+            errorMessage: strings.loginFormValidation,
             isValid:true,
             loading: false
         }
@@ -40,7 +44,7 @@ class Login extends Component{
                     }
                     else{
                         this.setState({
-                            errorMessage:'Invalid Username or Password',
+                            errorMessage:strings.loginFailed,
                             isValid:false,
                             loading: false
                         })
