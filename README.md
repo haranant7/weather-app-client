@@ -32,16 +32,16 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Directory structure :
 
-weather-app-client
-|
-|--- public
-|
-|---src
-    |
-    |---- actions - contains action creators
-    |---- assets  - Image files
-    |---- components  - contains App React Components
-    |---- font   - font files 
-    |---- reducers  - contains reducers
-    |---- styles    - CSS files
-    |---- utils  - utility files
+weather-app-client<br>
+|<br>
+|--- public<br>
+|<br>
+|---src<br>
+    |<br>
+    |---- actions - contains action creators<br>
+    |---- assets  - Image files<br>
+    |---- components  - contains App<br> React Components
+    |---- font   - font files <br>
+    |---- reducers  - contains reducers<br>
+    |---- styles    - CSS files<br>
+    |---- utils  - utility files<br>
